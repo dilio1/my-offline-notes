@@ -20,7 +20,7 @@
             });
         }
 
-        var add = function(noteText) {
+        var add = function(title, noteText) {
             var note = {
                 createdAt: new Date(),
                 text: noteText,
@@ -55,11 +55,57 @@
             });
         }
 
+        var addNote = function (title, noteText) {
+            var note = {
+                createdAt: new Date(),
+                text: noteText,
+                done: false
+            }
+
+            db.update({title: title}, { $push: { notes: note } }, function(err, note) {
+                if (err) {
+                    console.log(err);
+                }
+
+                return note;
+            });
+        }
+
+        var addTitle = function (title) {
+            var title = {
+                title: title,
+                notes: []
+            };
+
+            db.insert(title, function(err, title) {
+                if (err) {
+                    console.log(err);
+                }
+
+                return title;
+            });
+        }
+
+        var getTitles = function (callback) {
+            db.find({})
+            .projection({ title: 1 })
+            .exec(function(err, titles) {
+                if (err) {
+                    callback(err);
+                };
+
+                callback(titles);
+            });
+        }
+
         return {
         	get: get,
         	add: add,
             remove: remove,
-            markAsDone:markAsDone
+            markAsDone:markAsDone,
+            addNote: addNote,
+            addTitle: addTitle,
+            getTitles: getTitles
         }
     };
 

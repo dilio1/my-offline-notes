@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="styles/styles.css">
-    <title>my Offline notes..</title>
-    <link rel="stylesheet" href="
-https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.css">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles/styles.css">
+  <title>my Offline notes..</title>
+  <link rel="stylesheet" href="
+  https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.css">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
-    <script src="./node_modules/angular/angular.js"></script>
+  <script src="./node_modules/angular/angular.js"></script>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.js"></script>
 
-    <script src="./scripts/app.js"></script>
-    <script src="./scripts/notes-controller.js"></script>
-    <script src="./scripts/services/notes-service.js"></script>
-  </head>
-  <body>
+  <script src="./scripts/app.js"></script>
+  <script src="./scripts/notes-controller.js"></script>
+  <script src="./scripts/services/notes-service.js"></script>
+</head>
+<body>
   <div id="wrapper" ng-app="myOnotes.controllers" ng-controller="notesController as vm">
     <md-content class="container" md-theme="docs-dark">
 
-      <form ng-submit="vm.addNote()" layout="row" layout-align="center center" class="todo-form">
+      <!-- <form ng-submit="vm.addNote()" layout="row" layout-align="center center" class="todo-form">
 
         <md-input-container flex>
           <label>Add new note</label>
@@ -33,31 +33,45 @@ https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.c
 
         <md-button ng-click="vm.addNote()">Add</md-button>
 
-      </form>
-
-
+      </form> -->
+      
       <div>
         <div class="center">
           <h1>my <span class="italic">Offline</span> notes..</h1>
         </div>
       </div>
 
-      <md-list>
-        <md-list-item ng-repeat="note in vm.notes">
-          <p style="width:100px;height: 10%; overflow: hidden;"> {{ note.text }} </p>
-           <md-button class="md-icon-button md-accent" ng-click="vm.remove(note._id)" aria-label="Favorite">
-           <!-- <i class="fa fa-trash fa-2x" aria-hidden="true"></i> -->
-        <md-icon><i class="fa fa-trash fa-2x" aria-hidden="true"></i></md-icon>
-      </md-button>
-          <md-checkbox class="md-secondary" ng-model="note.done" aria-label="{{ note.text }}" ng-click="vm.markAsDone(note._id, note)"></md-checkbox>
-        </md-list-item>
-    </md-list>
-    
+      <div class="sample" layout="column" ng-cloak>
+        <md-content class="md-padding">
+          <md-tabs md-border-bottom md-autoselect>
+          <md-tab ng-repeat="title in vm.titles"
+            ng-disabled="false"
+            label="{{title.title}}">
+            <div style="padding: 25px; text-align: center;">
+              <div ng-bind="title.title"></div>
+            </div>
+          </md-tab>
+        </md-tabs>
+      </md-content>
+
+    </div>
+
+    <md-list>
+      <md-list-item ng-repeat="note in vm.notes">
+        <p style="width:100px;height: 10%; overflow: hidden;"> {{ note.text }} </p>
+        <md-button class="md-icon-button md-accent" ng-click="vm.remove(note._id)" aria-label="Favorite">
+         <!-- <i class="fa fa-trash fa-2x" aria-hidden="true"></i> -->
+         <md-icon><i class="fa fa-trash fa-2x" aria-hidden="true"></i></md-icon>
+       </md-button>
+       <md-checkbox class="md-secondary" ng-model="note.done" aria-label="{{ note.text }}" ng-click="vm.markAsDone(note._id, note)"></md-checkbox>
+     </md-list-item>
+   </md-list>
+
     <!-- <md-button class="md-primary md-raised" ng-click="showPrompt($event)"  >
       Prompt Dialog
     </md-button> -->
 
-    </md-content>
-  </div>
-  </body>
+  </md-content>
+</div>
+</body>
 </html>

@@ -26,12 +26,31 @@
                 notesService.remove(noteId, function () {
                     getNotes();
                 });
+            },
+            getTitles = function () {
+                notesService.getTitles(function (titles) {
+                    $scope.$apply(vm.titles = titles);
+                });
+            },
+            addTitles = function (title) {
+                notesService.addTitle(vm.inputNote);
+                notesService();
             };
 
-        getNotes();       
+        // getNotes();
+        getTitles();
         vm.addNote = addNote;
         vm.remove = rmeoveNote;
         vm.markAsDone = markAsDone;
+
+        vm.notes = [
+            {
+                text: 1
+            },
+            {
+                text: 'wd'
+            }
+        ];
 
         ipcRenderer.on('global-shortcut', function() {
              $mdDialog.show(
@@ -39,8 +58,8 @@
                 .title('Add new note..')
                 .ok('Okay!')
                 .cancel('Cancel')).then(function(result) {
-                    notesService.add(result);
-                    getNotes();
+                    notesService.addTitle(result);
+                    getTitles();
                 });
         });
     }
