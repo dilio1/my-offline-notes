@@ -1,0 +1,30 @@
+#wrapper, .container {
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.italic {
+	font-style: italic;
+}
+
+.center {
+	text-align: center;
+}
+
+/*NOT USED ANY MORE - CAN REMOVE*/
+/*.successItem {
+	font-size:150%;
+	font-weight:bold;
+	color:green;
+}
+
+#loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('../images/page-loader.gif') 50% 50% no-repeat rgb(1,249,249);
+}
+*/

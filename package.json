@@ -1,0 +1,13 @@
+{
+  "name": "hello-electron-app",
+  "version": "0.1.0",
+  "main": "main.js",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "nedb": "^1.8.0",
+    "request": "^2.74.0"
+  },
+  "scripts": {
+    "start": "electron main.js"
+  }
+}
