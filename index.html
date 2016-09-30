@@ -41,20 +41,20 @@
         </div>
       </div>
 
-      <div class="sample" layout="column" ng-cloak>
-        <md-content class="md-padding">
-          <md-tabs md-border-bottom md-autoselect>
-          <md-tab ng-repeat="title in vm.titles"
-            ng-disabled="false"
-            label="{{title.title}}">
-            <div style="padding: 25px; text-align: center;">
-              <div ng-bind="title.title"></div>
-            </div>
-          </md-tab>
-        </md-tabs>
-      </md-content>
-
+    <div>
+      <h1 class="md-title">Select a list..</h1>
+      <div layout="row">
+        <md-input-container>
+          <label>Lists</label>
+          <md-select ng-change="vm.getNotes()" ng-model="vm.selectedTitle" md-selected-text="vm.selectedTitle">
+            <md-optgroup label="Lists">
+              <md-option ng-value="item.title" ng-repeat="item in vm.titles">{{item.title}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+      </div>
     </div>
+
 
     <md-list>
       <md-list-item ng-repeat="note in vm.notes">
@@ -66,10 +66,6 @@
        <md-checkbox class="md-secondary" ng-model="note.done" aria-label="{{ note.text }}" ng-click="vm.markAsDone(note._id, note)"></md-checkbox>
      </md-list-item>
    </md-list>
-
-    <!-- <md-button class="md-primary md-raised" ng-click="showPrompt($event)"  >
-      Prompt Dialog
-    </md-button> -->
 
   </md-content>
 </div>

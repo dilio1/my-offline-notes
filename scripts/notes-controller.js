@@ -8,12 +8,12 @@
     function notesController($scope, $mdDialog, $element, notesService) {
         var vm = this,
             getNotes = function() {
-                notesService.get(function (notes) {
-                    $scope.$apply(vm.notes = notes);
+                notesService.get(vm.selectedTitle, function (result) {
+                    $scope.$apply(vm.notes = result.notes);
                 });
             },
             addNote = function () {
-                notesService.add(vm.inputNote);
+                notesService.add(vm.selectedTitle, vm.inputNote);
                 vm.inputNote = null;
                 getNotes();
             },
@@ -42,24 +42,35 @@
         vm.addNote = addNote;
         vm.remove = rmeoveNote;
         vm.markAsDone = markAsDone;
+        vm.getNotes = getNotes;
 
-        vm.notes = [
-            {
-                text: 1
-            },
-            {
-                text: 'wd'
+        ipcRenderer.on('add-title', function() {
+             $mdDialog.show(
+                $mdDialog.prompt()
+                .title('Add new title..')
+                .ok('Okay!')
+                .cancel('Cancel')).then(function(result) {
+                    notesService.addTitle(result);
+                    getTitles();
+                });
+        });
+
+        ipcRenderer.on('add-note', function() {
+            if (!vm.selectedTitle) {
+                $mdDialog.show(
+                $mdDialog.alert()
+                .title('Cannot add notes before selecting a list..')
+                .ok('Okay!'));
+                return;
             }
-        ];
 
-        ipcRenderer.on('global-shortcut', function() {
              $mdDialog.show(
                 $mdDialog.prompt()
                 .title('Add new note..')
                 .ok('Okay!')
                 .cancel('Cancel')).then(function(result) {
-                    notesService.addTitle(result);
-                    getTitles();
+                    notesService.addNote(vm.selectedTitle, result);
+                    getNotes();
                 });
         });
     }

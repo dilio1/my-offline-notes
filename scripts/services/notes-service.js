@@ -8,8 +8,8 @@
         .factory('notesService', [notesService]);
 
     function notesService() {
-        var get = function(callback) {
-        	db.find({})
+        var get = function(title, callback) {
+        	db.findOne({title: title}, { notes: 1, _id: 0 })
             .sort({ done: -1, createdAt: -1})
             .exec(function(err, notes) {
                 if (err) {

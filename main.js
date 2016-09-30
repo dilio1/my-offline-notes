@@ -8,8 +8,12 @@ function createWindow () {
   // win.webContents.openDevTools()
 
   globalShortcut.register('ctrl+d', function () {
-            win.webContents.send('global-shortcut', 0);
+            win.webContents.send('add-title', 0);
     });
+
+  globalShortcut.register('ctrl+g', function () {
+          win.webContents.send('add-note', 0);
+  });
 
   win.on('closed', () => {
     win = null
