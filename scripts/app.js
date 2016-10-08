@@ -13,7 +13,7 @@
 	angular.module('myOnotes.controllers', ['ngMaterial', 'myOnotes.services'])
 		.config(['$mdThemingProvider', configure]);
 
-	angular.module('myOnotes', ['ngMaterial', 'myOnotes.services', 'myOnotes.services'])
+	angular.module('myOnotes', ['ngMaterial', 'myOnotes.controllers', 'myOnotes.services'])
         .config(['$mdThemingProvider', configure])
         .run([])
         .constant([]);	

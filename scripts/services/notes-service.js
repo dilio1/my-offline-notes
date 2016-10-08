@@ -1,15 +1,15 @@
 (function(){
 
     var Datastore = require('nedb'),
-        db = new Datastore({ filename: 'my-offline-notes.db', autoload: true });
+        db = new Datastore({ filename: './storage/my-offline-notes.db', autoload: true });
 
     angular
         .module('myOnotes.services')
         .factory('notesService', [notesService]);
 
     function notesService() {
-        var get = function(callback) {
-        	db.find({})
+        var get = function(titleName, callback) {
+        	db.find({title: titleName})
             .sort({ done: -1, createdAt: -1})
             .exec(function(err, notes) {
                 if (err) {
@@ -20,10 +20,11 @@
             });
         }
 
-        var add = function(noteText) {
+        var add = function(titleName, noteText) {
             var note = {
                 createdAt: new Date(),
                 text: noteText,
+                title: titleName,
                 done: false
             }
 
@@ -45,8 +46,8 @@
             });
         }
 
-        var markAsDone = function (noteId, note, callback) {
-            db.update({_id: noteId}, { text: note.text, done: note.done, createdAt: note.createdAt}, function(err, numberOfUpdated) {
+        var markAsDone = function (noteId, isDone, callback) {
+            db.update({_id: noteId}, { $set: { done: isDone } }, function(err, numberOfUpdated) {
                 if (err) {
                     console.log(err);
                 }
