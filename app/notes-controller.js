@@ -2,7 +2,7 @@
 
     const {ipcRenderer} = require('electron');
     angular
-        .module('myOnotes.controllers')
+        .module('myOnotes')
         .controller('notesController', ['$scope', "$mdDialog", '$element', 'notesService', 'titlesService', notesController]);
 
     function notesController($scope, $mdDialog, $element, notesService, titlesService) {

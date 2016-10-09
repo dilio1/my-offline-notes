@@ -4,10 +4,14 @@
   "main": "main.js",
   "dependencies": {
     "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-material": "^1.1.1",
+    "angular-route": "^1.5.8",
     "nedb": "^1.8.0",
     "request": "^2.74.0"
   },
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron app/app-start.js"
   }
 }
