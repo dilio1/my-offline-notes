@@ -1,24 +1,26 @@
-(function(){
-   
+(function () {
+
     const {ipcRenderer} = require('electron');
     angular
         .module('myOnotes.controllers')
-        .controller('notesController', ['$scope', "$mdDialog", '$element', 'notesService', notesController]);
+        .controller('notesController', ['$scope', "$mdDialog", '$element', 'notesService', 'titlesService', notesController]);
 
-    function notesController($scope, $mdDialog, $element, notesService) {
+    function notesController($scope, $mdDialog, $element, notesService, titlesService) {
         var vm = this,
-            getNotes = function() {
-                notesService.get(function (notes) {
-                    $scope.$apply(vm.notes = notes);
-                });
+            getNotes = function () {
+                if (vm.currentTitle && vm.currentTitle.name) {
+                    notesService.get(vm.currentTitle.name, function (notes) {
+                        $scope.$apply(vm.notes = notes);
+                    });
+                }
             },
             addNote = function () {
                 notesService.add(vm.inputNote);
                 vm.inputNote = null;
                 getNotes();
             },
-            markAsDone = function (noteId, note) {
-                notesService.markAsDone(noteId, note, function() {
+            markAsDone = function (noteId, isDone) {
+                notesService.markAsDone(noteId, isDone, function () {
                     getNotes();
                 });
             },
@@ -26,22 +28,50 @@
                 notesService.remove(noteId, function () {
                     getNotes();
                 });
+            },
+            getTitles = function () {
+                titlesService.getAll(function (titles) {
+                    vm.titles = titles;
+                });
             };
 
-        getNotes();       
+
+        getTitles();
+        // getNotes();
+
+        vm.getNotes = getNotes;
         vm.addNote = addNote;
         vm.remove = rmeoveNote;
         vm.markAsDone = markAsDone;
 
-        ipcRenderer.on('global-shortcut', function() {
-             $mdDialog.show(
+        ipcRenderer.on('add-title', function () {
+            $mdDialog.show(
                 $mdDialog.prompt()
-                .title('Add new note..')
-                .ok('Okay!')
-                .cancel('Cancel')).then(function(result) {
-                    notesService.add(result);
-                    getNotes();
-                });
+                    .title('Add new title..')
+                    .ok('Okay!')
+                    .cancel('Cancel')).then(function (result) {
+                        titlesService.add(result);
+                        getTitles();
+                    });
+        });
+
+        ipcRenderer.on('add-note', function () {
+            if (!vm.currentTitle || !vm.currentTitle.name) {
+                $mdDialog.show(
+                    $mdDialog.alert()
+                        .title('Cannot add notes before selecting a list..')
+                        .ok('Okay!'));
+                return;
+            }
+
+            $mdDialog.show(
+                $mdDialog.prompt()
+                    .title('Add new note..')
+                    .ok('Okay!')
+                    .cancel('Cancel')).then(function (result) {
+                        notesService.add(vm.currentTitle.name, result);
+                        getNotes();
+                    });
         });
     }
 
