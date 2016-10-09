@@ -3,9 +3,9 @@
     const {ipcRenderer} = require('electron');
     angular
         .module('myOnotes')
-        .controller('notesController', ['$scope', "$mdDialog", '$element', 'notesService', 'titlesService', notesController]);
+        .controller('notesController', ['$scope', '$mdDialog', '$location', 'notesService', 'titlesService', notesController]);
 
-    function notesController($scope, $mdDialog, $element, notesService, titlesService) {
+    function notesController($scope, $mdDialog, $location, notesService, titlesService) {
         var vm = this,
             getNotes = function () {
                 if (vm.currentTitle && vm.currentTitle.name) {
@@ -33,6 +33,9 @@
                 titlesService.getAll(function (titles) {
                     vm.titles = titles;
                 });
+            },
+            navigateToNoteInfo = function (noteId) {
+                $location.path('/note-info/' + noteId);
             };
 
 
@@ -43,6 +46,7 @@
         vm.addNote = addNote;
         vm.remove = rmeoveNote;
         vm.markAsDone = markAsDone;
+        vm.navigateToNoteInfo = navigateToNoteInfo;
 
         ipcRenderer.on('add-title', function () {
             $mdDialog.show(

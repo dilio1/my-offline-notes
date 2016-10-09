@@ -4,7 +4,6 @@ const CONTROLLER_VIEW_MODEL_NAME = 'vm';
 var angular = require('angular');
 require('angular-route');
 require('angular-material');
-// require('./notes-controller');
 
 function configure(c) {
 	// Configure a dark theme with primary foreground yellow
@@ -32,10 +31,14 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
 
 	$routeProvider
 		.when('/', {
-			templateUrl: 'partials/identity/register.html',
+			templateUrl: './templates/notes.html',
 			controller: 'notesController',
 			controllerAs: CONTROLLER_VIEW_MODEL_NAME
 		})
+		.when('/note-info/:noteId', {
+			templateUrl: './templates/note-info.html',
+			controller: 'noteInfoController',
+			controllerAs: CONTROLLER_VIEW_MODEL_NAME
+		})
 		.otherwise({ redirectTo: '/' });
-
 }]);

@@ -10,39 +10,22 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <script src="./app.js"></script>
-  <script src="./notes-controller.js"></script>
+  <script src="./controllers/notes-controller.js"></script>
+  <script src="./controllers/note-info-controller.js"></script>
   <script src="./services/notes-service.js"></script>
   <script src="./services/titles-service.js"></script>
 </head>
 
 <body>
-  <div id="wrapper" ng-app="myOnotes" ng-controller="notesController as vm">
+  <div id="wrapper" ng-app="myOnotes">
     <md-content class="container" md-theme="indigo">
       <div>
         <div class="center">
           <h1>my <span class="italic">Offline</span> notes..</h1>
         </div>
       </div>
-
-      <div layout="column" layout-align="center center">
-        <md-select placeholder="Pick a list" ng-change="vm.getNotes()" ng-model="vm.currentTitle" style="min-width: 200px;">
-          <md-option ng-value="title" ng-repeat="title in vm.titles">{{title.name}}</md-option>
-        </md-select>
-      </div>
-
-      <md-list>
-        <md-list-item ng-repeat="note in vm.notes">
-          <p style="width:100px;height: 10%; overflow: hidden;"> {{ note.text }} </p>
-          <md-button class="md-icon-button md-accent" ng-click="vm.remove(note._id)" aria-label="Favorite">
-           <md-icon md-font-library="material-icons">delete_forever</md-icon>
-          </md-button>
-          <md-button class="md-icon-button md-accent" ng-click="vm.remove(note._id)" aria-label="Favorite">
-           <md-icon md-font-library="material-icons">mode_edit</md-icon>
-          </md-button>
-          <md-checkbox class="md-secondary" ng-model="note.done" aria-label="{{ note.text }}" ng-click="vm.markAsDone(note._id, note.done)"></md-checkbox>
-        </md-list-item>
-      </md-list>
-
+      
+      <ng-view></ng-view>
       <!-- <md-button class="md-primary md-raised" ng-click="showPrompt($event)"  >
       Prompt Dialog
     </md-button> -->
