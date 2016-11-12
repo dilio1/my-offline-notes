@@ -6,15 +6,16 @@
   <link rel="stylesheet" href="./styles/styles.css">
   <title>my Offline notes..</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.css">
-
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+  <link rel="stylesheet" href="../bower_components/ng-inline-edit/dist/ng-inline-edit.min.css">
+  
   <script src="./app.js"></script>
   <script src="./controllers/notes-controller.js"></script>
   <script src="./controllers/note-info-controller.js"></script>
   <script src="./services/notes-service.js"></script>
   <script src="./services/categories-service.js"></script>
   <script src="./services/settings-service.js"></script>
+  <script src="../bower_components/ng-inline-edit/dist/ng-inline-edit.min.js"></script>
   <script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
 </head>
 
@@ -26,7 +27,7 @@
           <h1>my <span class="italic">Offline</span> notes..</h1>
         </div>
       </div>
-      
+
       <ng-view></ng-view>
       <!-- <md-button class="md-primary md-raised" ng-click="showPrompt($event)"  >
       Prompt Dialog

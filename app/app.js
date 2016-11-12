@@ -14,7 +14,7 @@ function configure(c) {
 		.foregroundPalette['3'] = 'yellow';
 };
 
-var app = angular.module('myOnotes', ['ngRoute', 'ngMaterial', 'ngAnimate']);
+var app = angular.module('myOnotes', ['ngRoute', 'ngMaterial', 'ngAnimate', 'angularInlineEdit']);
 
 app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $mdThemingProvider) {
 	// $mdThemingProvider

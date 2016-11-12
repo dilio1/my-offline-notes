@@ -66,8 +66,18 @@
             });
         };
 
-        var update = function (note, callback){
-            db.update({ _id: note._id }, {"$set": note}, {}, function (err, numberOfUpdated) {
+        var update = function (note, callback) {
+            db.update({ _id: note._id }, { "$set": note }, {}, function (err, numberOfUpdated) {
+                if (err) {
+                    console.log(err);
+                }
+
+                callback();
+            });
+        };
+
+        var updateName = function (noteId, noteName, callback) {
+            db.update({ _id: noteId }, { "$set": { name: noteName } }, {}, function (err, numberOfUpdated) {
                 if (err) {
                     console.log(err);
                 }
@@ -82,7 +92,8 @@
             add: add,
             remove: remove,
             markAsDone: markAsDone,
-            update: update
+            update: update,
+            updateName: updateName
         }
     };
 
