@@ -11,6 +11,13 @@
 	text-align: center;
 }
 
+#editor { 
+    position: relative !important;
+    border: 1px solid lightgray;
+    margin: auto;
+    height: 500px;
+}
+
 /*NOT USED ANY MORE - CAN REMOVE*/
 /*.successItem {
 	font-size:150%;

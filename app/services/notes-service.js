@@ -33,6 +33,7 @@
             var note = {
                 createdAt: new Date(),
                 name: noteName,
+                text: '',
                 category: categoryName,
                 done: false
             }
@@ -65,12 +66,23 @@
             });
         };
 
+        var update = function (note, callback){
+            db.update({ _id: note._id }, {"$set": note}, {}, function (err, numberOfUpdated) {
+                if (err) {
+                    console.log(err);
+                }
+
+                callback();
+            });
+        };
+
         return {
             get: get,
             getSingle: getSingle,
             add: add,
             remove: remove,
-            markAsDone: markAsDone
+            markAsDone: markAsDone,
+            update: update
         }
     };
 

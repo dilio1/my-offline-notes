@@ -17,7 +17,7 @@
 
                 callback(categories);
             });
-        }
+        };
 
         var add = function(categoryName) {
             var category = {
@@ -32,7 +32,7 @@
 
                 return category;
             });
-        }
+        };
 
         return {
         	add: add,
