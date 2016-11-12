@@ -8,8 +8,8 @@
         .factory('notesService', [notesService]);
 
     function notesService() {
-        var get = function (titleName, callback) {
-            db.find({ title: titleName })
+        var get = function (categoryName, callback) {
+            db.find({ category: categoryName })
                 .sort({ done: -1, createdAt: -1 })
                 .exec(function (err, notes) {
                     if (err) {
@@ -29,11 +29,11 @@
             });
         };
 
-        var add = function (titleName, noteText) {
+        var add = function (categoryName, noteName) {
             var note = {
                 createdAt: new Date(),
-                text: noteText,
-                title: titleName,
+                name: noteName,
+                category: categoryName,
                 done: false
             }
 

@@ -3,13 +3,13 @@
     const {ipcRenderer} = require('electron');
     angular
         .module('myOnotes')
-        .controller('notesController', ['$scope', '$mdDialog', '$location', 'notesService', 'titlesService', notesController]);
+        .controller('notesController', ['$scope', '$mdDialog', '$mdToast', '$location', 'notesService', 'categoriesService', notesController]);
 
-    function notesController($scope, $mdDialog, $location, notesService, titlesService) {
+    function notesController($scope, $mdDialog, $mdToast, $location, notesService, categoriesService) {
         var vm = this,
             getNotes = function () {
-                if (vm.currentTitle && vm.currentTitle.name) {
-                    notesService.get(vm.currentTitle.name, function (notes) {
+                if (vm.currentCategory && vm.currentCategory.name) {
+                    notesService.get(vm.currentCategory.name, function (notes) {
                         $scope.$apply(vm.notes = notes);
                     });
                 }
@@ -29,9 +29,9 @@
                     getNotes();
                 });
             },
-            getTitles = function () {
-                titlesService.getAll(function (titles) {
-                    vm.titles = titles;
+            getCategories = function () {
+                categoriesService.getAll(function (categories) {
+                    vm.categories = categories;
                 });
             },
             navigateToNoteInfo = function (noteId) {
@@ -39,7 +39,7 @@
             };
 
 
-        getTitles();
+        getCategories();
         // getNotes();
 
         vm.getNotes = getNotes;
@@ -48,19 +48,19 @@
         vm.markAsDone = markAsDone;
         vm.navigateToNoteInfo = navigateToNoteInfo;
 
-        ipcRenderer.on('add-title', function () {
+        ipcRenderer.on('add-category', function () {
             $mdDialog.show(
                 $mdDialog.prompt()
-                    .title('Add new title..')
+                    .title('Add new category..')
                     .ok('Okay!')
                     .cancel('Cancel')).then(function (result) {
-                        titlesService.add(result);
-                        getTitles();
+                        categoriesService.add(result);
+                        getCategories();
                     });
         });
 
         ipcRenderer.on('add-note', function () {
-            if (!vm.currentTitle || !vm.currentTitle.name) {
+            if (!vm.currentCategory || !vm.currentCategory.name) {
                 $mdDialog.show(
                     $mdDialog.alert()
                         .title('Cannot add notes before selecting a list..')
@@ -72,10 +72,19 @@
                 $mdDialog.prompt()
                     .title('Add new note..')
                     .ok('Okay!')
-                    .cancel('Cancel')).then(function (result) {
-                        notesService.add(vm.currentTitle.name, result);
+                    .cancel('Cancel'))
+                .then(function (result) {
+                    if (result) {
+                        notesService.add(vm.currentCategory.name, result);
                         getNotes();
-                    });
+                    } else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('Note name cannot be empty.')
+                                .position('left')
+                                .hideDelay(1000));
+                    }
+                });
         });
     }
 

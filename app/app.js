@@ -26,7 +26,7 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
 		$mdThemingProvider
 		.theme('indigo', 'default')
 		.primaryPalette('pink')
-		.dark()
+		// .dark()
     .accentPalette('orange');
 
 	$routeProvider

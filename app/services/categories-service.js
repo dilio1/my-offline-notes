@@ -5,32 +5,32 @@
 
     angular
         .module('myOnotes')
-        .factory('titlesService', [titlesService]);
+        .factory('categoriesService', [categoriesService]);
 
-    function titlesService() {
+    function categoriesService() {
         var getAll = function(callback) {
         	db.find({})
-            .exec(function(err, titles) {
+            .exec(function(err, categories) {
                 if (err) {
                     callback(err);
                 };
 
-                callback(titles);
+                callback(categories);
             });
         }
 
-        var add = function(titleName) {
-            var title = {
+        var add = function(categoryName) {
+            var category = {
                 createdAt: new Date(),
-                name: titleName
+                name: categoryName
             }
 
-            db.insert(title, function(err, title) {
+            db.insert(category, function(err, category) {
                 if (err) {
                     console.log(err);
                 }
 
-                return title;
+                return category;
             });
         }
 

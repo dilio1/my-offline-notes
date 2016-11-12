@@ -12,7 +12,7 @@ function createWindow() {
   });
 
   globalShortcut.register('ctrl+g', function () {
-    win.webContents.send('add-title', 0);
+    win.webContents.send('add-category', 0);
   });
 
   win.on('closed', () => {

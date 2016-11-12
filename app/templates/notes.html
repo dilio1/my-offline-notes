@@ -1,18 +1,18 @@
 <div layout="column" layout-align="center center">
-    <md-select placeholder="Pick a list" ng-change="vm.getNotes()" ng-model="vm.currentTitle" style="min-width: 200px;">
-        <md-option ng-value="title" ng-repeat="title in vm.titles">{{title.name}}</md-option>
+    <md-select placeholder="Pick a list" ng-change="vm.getNotes()" ng-model="vm.currentCategory" style="min-width: 200px;">
+        <md-option ng-value="category" ng-repeat="category in vm.categories">{{category.name}}</md-option>
     </md-select>
 </div>
 
 <md-list>
     <md-list-item ng-repeat="note in vm.notes">
-        <p style="width:100px;height: 10%; overflow: hidden;"> {{ note.text }} </p>
+        <p style="width:100px;height: 10%; overflow: hidden;"> {{ note.name }} </p>
         <md-button class="md-icon-button md-accent" ng-click="vm.remove(note._id)" aria-label="Favorite">
             <md-icon md-font-library="material-icons">delete_forever</md-icon>
         </md-button>
         <md-button class="md-icon-button md-accent" ng-click="vm.navigateToNoteInfo(note._id)" aria-label="Favorite">
             <md-icon md-font-library="material-icons">mode_edit</md-icon>
         </md-button>
-        <md-checkbox class="md-secondary" ng-model="note.done" aria-label="{{ note.text }}" ng-click="vm.markAsDone(note._id, note.done)"></md-checkbox>
+        <md-checkbox class="md-secondary" ng-model="note.done" aria-label="{{ note.name }}" ng-click="vm.markAsDone(note._id, note.done)"></md-checkbox>
     </md-list-item>
 </md-list>

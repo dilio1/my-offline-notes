@@ -2,9 +2,9 @@
 
     angular
         .module('myOnotes')
-        .controller('noteInfoController', ['$scope', '$routeParams', '$location', 'notesService', 'titlesService', noteInfoController]);
+        .controller('noteInfoController', ['$scope', '$routeParams', '$location', 'notesService', 'categoriesService', noteInfoController]);
 
-    function noteInfoController($scope, $routeParams, $location, notesService, titlesService) {
+    function noteInfoController($scope, $routeParams, $location, notesService, categoriesService) {
         var vm = this,
             currentNoteId = $routeParams.noteId,
             getNote = function () {
