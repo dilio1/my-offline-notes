@@ -1,10 +1,16 @@
-<md-input-container class="md-block">
+<!--<md-input-container class="md-block">
         <input required md-no-asterisk name="name" ng-model="vm.currentNote.name">
-</md-input-container>
+</md-input-container>-->
 
+        <p  style="text-align:center;"
+            inline-edit="vm.currentNote.name" 
+            inline-edit-on-click
+            inline-edit-btn-edit=""
+            inline-edit-on-blur="save">
+        </p>
 
-<md-button class="md-icon-button md-accent" ng-click="vm.navigateHome()" aria-label="Favorite">
+<!--<md-button class="md-icon-button md-accent" ng-click="vm.navigateHome()" aria-label="Favorite">
     <md-icon md-font-library="material-icons">home</md-icon>
-</md-button>
+</md-button>-->
 
 <div id="editor"></div>

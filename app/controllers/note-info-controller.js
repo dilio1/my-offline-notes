@@ -32,6 +32,7 @@
             },
             initEditor = function () {
                 editor = ace.edit('editor');
+                editor.setTheme("ace/theme/idle_fingers");
                 editor.getSession();
             };
 

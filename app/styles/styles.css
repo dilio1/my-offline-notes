@@ -24,6 +24,12 @@
 	background-color: transparent;
 	font-style: italic;
 	color: #EF6C00;
+	text-align: inherit;
+}
+
+.header-link {
+	color: inherit;
+	text-decoration: none;
 }
 
 /*NOT USED ANY MORE - CAN REMOVE*/
