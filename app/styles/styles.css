@@ -32,6 +32,16 @@
 	text-decoration: none;
 }
 
+.nav-item {
+	margin: 2%;
+	text-decoration: none;
+}
+
+md-toast div {
+    background-color: white !important;
+	color: black !important;
+}
+
 /*NOT USED ANY MORE - CAN REMOVE*/
 /*.successItem {
 	font-size:150%;
@@ -49,3 +59,11 @@
 	background: url('../images/page-loader.gif') 50% 50% no-repeat rgb(1,249,249);
 }
 */
+
+/*.loader {
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+}*/

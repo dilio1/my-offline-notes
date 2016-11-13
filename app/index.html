@@ -8,14 +8,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="../bower_components/ng-inline-edit/dist/ng-inline-edit.min.css">
-  
+
   <script src="./app.js"></script>
   <script src="./controllers/notes-controller.js"></script>
   <script src="./controllers/note-info-controller.js"></script>
+  <script src="./controllers/categories-controller.js"></script>
+  <script src="./controllers/settings-controller.js"></script>
   <script src="./services/notes-service.js"></script>
   <script src="./services/categories-service.js"></script>
   <script src="./services/settings-service.js"></script>
   <script src="./services/shortcut-service.js"></script>
+  <script src="./services/loader-service.js"></script>
   <script src="../bower_components/ng-inline-edit/dist/ng-inline-edit.min.js"></script>
   <script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
   <script src="../src-min/theme-kr_theme.js" type="text/javascript" charset="utf-8"></script>
@@ -30,6 +33,14 @@
         <div class="center">
           <h1><a class="header-link" href="#/">my <span class="italic">Offline</span> notes..</a></h1>
         </div>
+        <md-content class="md-padding">
+            <a class="nav-item" href="#/">Notes</a>
+            <a class="nav-item" href="#/categories">Categories</a>
+            <a class="nav-item" href="#/settings">Settings</a>
+            <!--<md-nav-item md-nav-click="goto('page3')" name="page3">Notes</md-nav-item>
+            <md-nav-item md-nav-click="goto('page1')" name="page1">Categories</md-nav-item>
+            <md-nav-item md-nav-click="goto('page2')" name="page2">Settings</md-nav-item>-->
+        </md-content>
       </div>
 
       <ng-view></ng-view>
