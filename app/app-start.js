@@ -6,13 +6,8 @@ function createWindow() {
   win = new BrowserWindow({ width: 800, height: 600, toolbar: false })
   win.loadURL(`file://${__dirname}/index.html`)
   win.webContents.openDevTools()
-
-  globalShortcut.register('ctrl+d', function () {
-    win.webContents.send('add-note', 0);
-  });
-
-  globalShortcut.register('ctrl+g', function () {
-    win.webContents.send('add-category', 0);
+  globalShortcut.register('ctrl+e', function () {
+    win.isFocused() ? win.blur() : win.focus();
   });
 
   win.on('closed', () => {

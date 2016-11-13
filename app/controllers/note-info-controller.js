@@ -3,9 +3,9 @@
     require('../src-min/ace');
     angular
         .module('myOnotes')
-        .controller('noteInfoController', ['$scope', '$routeParams', '$location', '$mdToast', 'notesService', 'categoriesService', noteInfoController]);
+        .controller('noteInfoController', ['$scope', '$routeParams', '$location', '$mdToast', 'notesService', 'categoriesService', 'shortcutService', noteInfoController]);
 
-    function noteInfoController($scope, $routeParams, $location, $mdToast, notesService, categoriesService) {
+    function noteInfoController($scope, $routeParams, $location, $mdToast, notesService, categoriesService, shortcutService) {
         var vm = this,
             editor,
             currentNoteId = $routeParams.noteId,
@@ -37,10 +37,12 @@
             };
 
 
-        shortcut.add("Ctrl+s", function () {
+
+        shortcutService.removeAll();
+        shortcutService.addShortcut("Ctrl+s", function () {
             updateNote();
         });
-
+        
         initEditor();
         getNote();
         vm.navigateHome = navigateHome;
