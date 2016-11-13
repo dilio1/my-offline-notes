@@ -3,12 +3,11 @@
     require('../src-min/ace');
     angular
         .module('myOnotes')
-        .controller('categoriesController', ['$scope', '$mdDialog', '$routeParams', '$location', '$mdToast', 'notesService', 'categoriesService', 'shortcutService', 'settingsService', 'loaderService', categoriesController]);
+        .controller('categoriesController', ['$scope', '$mdDialog', '$location', 'notesService', 'categoriesService', 'shortcutService', 'settingsService', 'loaderService', categoriesController]);
 
-    function categoriesController($scope, $mdDialog, $routeParams, $location, $mdToast, notesService, categoriesService, shortcutService, settingsService, loaderService) {
+    function categoriesController($scope, $mdDialog, $location, notesService, categoriesService, shortcutService, settingsService, loaderService) {
         var vm = this,
             editor,
-            currentNoteId = $routeParams.noteId,
             getCategories = function () {
                 categoriesService.getAll(function (categories) {
                     $scope.$apply(vm.categories = categories);
@@ -49,6 +48,7 @@
                     });
             };
 
+        shortcutService.removeAll();
         getCategories();
         vm.addCategory = addCategory;
         vm.selectCategory = selectCategory;

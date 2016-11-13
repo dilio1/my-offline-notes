@@ -40,6 +40,11 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
 			controller: 'categoriesController',
 			controllerAs: CONTROLLER_VIEW_MODEL_NAME
 		})
+		.when('/settings', {
+			templateUrl: './templates/settings.html',
+			controller: 'settingsController',
+			controllerAs: CONTROLLER_VIEW_MODEL_NAME
+		})
 		.when('/note-info/:noteId', {
 			templateUrl: './templates/note-info.html',
 			controller: 'noteInfoController',

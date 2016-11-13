@@ -37,6 +37,11 @@
 	text-decoration: none;
 }
 
+md-toast div {
+    background-color: white !important;
+	color: black !important;
+}
+
 /*NOT USED ANY MORE - CAN REMOVE*/
 /*.successItem {
 	font-size:150%;

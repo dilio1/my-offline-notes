@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
     const {ipcRenderer} = require('electron');
     angular
@@ -7,55 +7,55 @@
 
     function notesController($scope, $mdDialog, $mdToast, $location, notesService, categoriesService, shortcutService, settingsService) {
         var vm = this,
-            getNotes = function () {
+            getNotes = function() {
                 if (vm.currentCategory && vm.currentCategory.name) {
-                    notesService.get(vm.currentCategory.name, function (notes) {
+                    notesService.get(vm.currentCategory.name, function(notes) {
                         $scope.$apply(vm.notes = notes);
                     });
                 }
             },
-            addNote = function () {
+            addNote = function() {
                 notesService.add(vm.inputNote);
                 vm.inputNote = null;
                 getNotes();
             },
-            markAsDone = function (noteId, isDone) {
-                notesService.markAsDone(noteId, isDone, function () {
+            markAsDone = function(noteId, isDone) {
+                notesService.markAsDone(noteId, isDone, function() {
                     getNotes();
                 });
             },
-            rmeoveNote = function (noteId) {
-                notesService.remove(noteId, function () {
+            rmeoveNote = function(noteId) {
+                notesService.remove(noteId, function() {
                     getNotes();
                 });
             },
-            getCategories = function () {
-                categoriesService.getAll(function (categories) {
+            getCategories = function() {
+                categoriesService.getAll(function(categories) {
                     vm.categories = categories;
                 });
             },
-            updateName = function (noteId, noteName) {
+            updateName = function(noteId, noteName) {
                 if (!noteName) {
                     addToast('Name cannot be empty...');
                     getNotes();
                     return;
                 }
 
-                notesService.updateName(noteId, noteName, function () {
+                notesService.updateName(noteId, noteName, function() {
                     addToast('Updated...');
                 });
             },
-            navigateToNoteInfo = function (noteId) {
+            navigateToNoteInfo = function(noteId) {
                 $location.path('/note-info/' + noteId);
             },
-            addToast = function (message) {
+            addToast = function(message) {
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent(message)
                         .position('left')
                         .hideDelay(200));
             },
-            handleChangeCategory = function (categoryName) {
+            handleChangeCategory = function(categoryName) {
                 if (!categoryName) {
                     $mdToast.show(
                         $mdToast.simple()
@@ -65,7 +65,7 @@
                     return;
                 }
 
-                var preselectedCategory = vm.categories.find(function (category) {
+                var preselectedCategory = vm.categories.find(function(category) {
                     return category.name === categoryName;
                 });
 
@@ -82,19 +82,22 @@
                 settingsService.updateLastSelectedCategory(preselectedCategory.name);
                 getNotes();
             },
-            init = function () {
+            init = function() {
                 shortcutService.removeAll();
-                settingsService.getSettings(function (settings) {
-                    categoriesService.getAll(function (categories) {
-                        var preselectedCategory = categories.find(function (category) {
+                settingsService.getSettings(function(settings) {
+                    categoriesService.getAll(function(categories) {
+                        var preselectedCategory = categories.find(function(category) {
                             return category.name === settings.lastSelectedCategory;
                         });
 
                         vm.categories = categories;
                         if (preselectedCategory) {
                             vm.currentCategory = preselectedCategory;
-                            getNotes();
+                        } else {
+                            vm.currentCategory = categories[0];
                         }
+
+                        getNotes();
                     });
                 });
             };
@@ -110,7 +113,7 @@
         vm.updateName = updateName;
         vm.navigateToNoteInfo = navigateToNoteInfo;
 
-        shortcutService.addShortcut("Ctrl+d", function () {
+        shortcutService.addShortcut("Ctrl+d", function() {
             if (!vm.currentCategory || !vm.currentCategory.name) {
                 $mdDialog.show(
                     $mdDialog.alert()
@@ -124,7 +127,7 @@
                     .title('Add new note..')
                     .ok('Okay!')
                     .cancel('Cancel'))
-                .then(function (result) {
+                .then(function(result) {
                     if (result) {
                         notesService.add(vm.currentCategory.name, result);
                         getNotes();
@@ -138,12 +141,12 @@
                 });
         });
 
-        shortcutService.addShortcut('Ctrl+g', function () {
+        shortcutService.addShortcut('Ctrl+g', function() {
             $mdDialog.show(
                 $mdDialog.prompt()
                     .title('Add new category..')
                     .ok('Okay!')
-                    .cancel('Cancel')).then(function (result) {
+                    .cancel('Cancel')).then(function(result) {
                         if (result) {
                             categoriesService.add(result);
                             getCategories();
@@ -157,12 +160,12 @@
                     });
         });
 
-        shortcutService.addShortcut('Ctrl+space', function () {
+        shortcutService.addShortcut('Ctrl+space', function() {
             $mdDialog.show(
                 $mdDialog.prompt()
                     .title('Change category..')
                     .ok('Okay!')
-                    .cancel('Cancel')).then(function (result) {
+                    .cancel('Cancel')).then(function(result) {
                         handleChangeCategory(result);
                     });
         });
