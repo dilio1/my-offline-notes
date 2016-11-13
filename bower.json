@@ -1,0 +1,16 @@
+{
+  "name": "hello-electron-app",
+  "main": "main.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ng-inline-edit": "~0.7.0"
+  }
+}
