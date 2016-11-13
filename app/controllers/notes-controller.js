@@ -3,9 +3,9 @@
     const {ipcRenderer} = require('electron');
     angular
         .module('myOnotes')
-        .controller('notesController', ['$scope', '$mdDialog', '$mdToast', '$location', 'notesService', 'categoriesService', 'shortcutService', 'settingsService', notesController]);
+        .controller('notesController', ['$scope', '$mdDialog', '$mdToast', '$location', 'notesService', 'categoriesService', 'shortcutService', 'settingsService', 'loaderService', notesController]);
 
-    function notesController($scope, $mdDialog, $mdToast, $location, notesService, categoriesService, shortcutService, settingsService) {
+    function notesController($scope, $mdDialog, $mdToast, $location, notesService, categoriesService, shortcutService, settingsService, loaderService) {
         var vm = this,
             getNotes = function() {
                 if (vm.currentCategory && vm.currentCategory.name) {
@@ -148,8 +148,14 @@
                     .ok('Okay!')
                     .cancel('Cancel')).then(function(result) {
                         if (result) {
-                            categoriesService.add(result);
-                            getCategories();
+                            loaderService.showLoader();
+                            categoriesService.add(result, function(newCategory) {
+                                settingsService.updateLastSelectedCategory(newCategory.name, function() {
+                                    vm.currentCategory = newCategory;
+                                    loaderService.hideLoader();
+                                    getNotes();
+                                });
+                            });
                         } else {
                             $mdToast.show(
                                 $mdToast.simple()
