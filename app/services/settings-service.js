@@ -18,10 +18,14 @@
                 });
         };
 
-        var updateLastSelectedCategory = function (categoryName) {
+        var updateLastSelectedCategory = function (categoryName, callback) {
             db.update({}, { $set: { lastSelectedCategory: categoryName } }, {}, function (err, numberOfUpdated) {
                 if (err) {
                     console.log(err);
+                }
+
+                if (callback) {
+                    callback();
                 }
             });
         };

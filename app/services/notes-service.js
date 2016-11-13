@@ -55,6 +55,15 @@
                 callback(removedCount);
             });
         };
+        
+         var removeByCategory = function (categoryName, callback) {
+            db.remove({ category: categoryName }, function (err, removedCount) {
+                if (err) {
+                    console.log(err);
+                }
+                callback(removedCount);
+            });
+        };
 
         var markAsDone = function (noteId, isDone, callback) {
             db.update({ _id: noteId }, { $set: { done: isDone } }, function (err, numberOfUpdated) {
@@ -86,6 +95,16 @@
             });
         };
 
+        var getCount = function (categoryName, callback) {
+            db.count({ category: categoryName }, function (err, count) {
+                if (err) {
+                    callback(err);
+                };
+
+                callback(count);
+            });
+        };
+
         return {
             get: get,
             getSingle: getSingle,
@@ -93,7 +112,9 @@
             remove: remove,
             markAsDone: markAsDone,
             update: update,
-            updateName: updateName
+            updateName: updateName,
+            getCount: getCount,
+            removeByCategory: removeByCategory
         }
     };
 

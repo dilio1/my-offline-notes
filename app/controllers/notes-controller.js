@@ -3,9 +3,9 @@
     const {ipcRenderer} = require('electron');
     angular
         .module('myOnotes')
-        .controller('notesController', ['$scope', '$mdDialog', '$mdToast', '$location', 'notesService', 'categoriesService', 'shortcutService', notesController]);
+        .controller('notesController', ['$scope', '$mdDialog', '$mdToast', '$location', 'notesService', 'categoriesService', 'shortcutService', 'settingsService', notesController]);
 
-    function notesController($scope, $mdDialog, $mdToast, $location, notesService, categoriesService, shortcutService) {
+    function notesController($scope, $mdDialog, $mdToast, $location, notesService, categoriesService, shortcutService, settingsService) {
         var vm = this,
             getNotes = function () {
                 if (vm.currentCategory && vm.currentCategory.name) {
@@ -54,11 +54,53 @@
                         .textContent(message)
                         .position('left')
                         .hideDelay(200));
+            },
+            handleChangeCategory = function (categoryName) {
+                if (!categoryName) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('Category name cannot be empty.')
+                            .position('left')
+                            .hideDelay(1000));
+                    return;
+                }
+
+                var preselectedCategory = vm.categories.find(function (category) {
+                    return category.name === categoryName;
+                });
+
+                if (!preselectedCategory) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('Category does not exists...')
+                            .position('left')
+                            .hideDelay(1000));
+                    return;
+                }
+
+                vm.currentCategory = preselectedCategory;
+                settingsService.updateLastSelectedCategory(preselectedCategory.name);
+                getNotes();
+            },
+            init = function () {
+                shortcutService.removeAll();
+                settingsService.getSettings(function (settings) {
+                    categoriesService.getAll(function (categories) {
+                        var preselectedCategory = categories.find(function (category) {
+                            return category.name === settings.lastSelectedCategory;
+                        });
+
+                        vm.categories = categories;
+                        if (preselectedCategory) {
+                            vm.currentCategory = preselectedCategory;
+                            getNotes();
+                        }
+                    });
+                });
             };
 
-
-        shortcutService.removeAll();
-        getCategories();
+        init();
+        // getCategories();
         // getNotes();
 
         vm.getNotes = getNotes;
@@ -112,6 +154,16 @@
                                     .position('left')
                                     .hideDelay(1000));
                         }
+                    });
+        });
+
+        shortcutService.addShortcut('Ctrl+space', function () {
+            $mdDialog.show(
+                $mdDialog.prompt()
+                    .title('Change category..')
+                    .ok('Okay!')
+                    .cancel('Cancel')).then(function (result) {
+                        handleChangeCategory(result);
                     });
         });
     }

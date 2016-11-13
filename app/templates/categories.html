@@ -1,0 +1,9 @@
+<md-content class="md-padding" layout="column">
+    <md-chips ng-model="vm.categories" md-on-select="vm.selectCategory($chip.name)"  md-on-remove="vm.removeCategory($chip)"  md-on-add="vm.addCategory($chip)">
+        <md-chip-template>
+            <span>
+          <strong>{{$chip.name}}</strong>
+        </span>
+        </md-chip-template>
+    </md-chips>
+</md-content>

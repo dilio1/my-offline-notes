@@ -1,7 +1,5 @@
 <div layout="column" layout-align="center center">
-    <md-select placeholder="Pick a list" ng-change="vm.getNotes()" ng-model="vm.currentCategory" style="min-width: 200px;">
-        <md-option ng-value="category" ng-repeat="category in vm.categories">{{category.name}}</md-option>
-    </md-select>
+    <h3>{{vm.currentCategory.name}}</h3>
 </div>
 
 <md-list>
